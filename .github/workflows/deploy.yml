@@ -1,55 +1,76 @@
 name: Build and Upload Firmware
 
 on:
-    release:
-        types:
-            - created
+  release:
+    types: [created]
+
+permissions:
+  contents: write # Required to upload assets to the Release
 
 jobs:
-    pio-build:
-        runs-on: ubuntu-latest
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build and Package Firmware
         env:
-            GH_TOKEN: ${{ github.token }}
+          # Use the release tag name as the version, or fallback to run number
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          echo "=== Building firmware for tag $RELEASE_TAG ==="
 
-        steps:
-            - uses: actions/checkout@v4
+          # 1. Set Build Flags (Ported from GitLab)
+          # We use github.run_number for versioning to keep it strictly numeric if needed, 
+          # or use $RELEASE_TAG if your code accepts strings.
+          export PLATFORMIO_BUILD_FLAGS="-DOTA_BUILT_ON_GITHUB -DFIRMWARE_VERSION=$BUILD_NUMBER"
+          echo "PlatformIO build flags: $PLATFORMIO_BUILD_FLAGS"
 
-            - name: Set up PlatformIO
-              run: |
-                  sudo apt-get install -y python3-pip
-                  pip3 install platformio
-              shell: bash
+          # 2. Detect environments (Ported EXACTLY from your GitLab awk script)
+          echo "Detecting environments in platformio.ini..."
+          ENV_LIST=$(awk '/^\[env:/{env=$0} /^# -- CICD IGNORE BUILD --/{exit} {if(env){print substr(env,6,length(env)-6); env=""}}' platformio.ini)
 
-            - name: Build Firmware
-              run: |
-                echo 'PLATFORMIO_BUILD_FLAGS=-DOTA_VERSION="${{ github.event.release.name }}" -DOTA_BUILT_ON_GITHUB' >> $GITHUB_ENV
-                echo "$PLATFORMIO_BUILD_FLAGS"
-                pio run -e esp32
+          echo "Environments detected:"
+          echo "$ENV_LIST"
 
-            - name: Upload Firmware
-              uses: actions/upload-artifact@v4
-              with:
-                  name: firmware
-                  path: .pio/build/esp32/firmware.bin
+          # Create a directory to hold the final assets
+          mkdir -p release_assets
 
-    update-firmware-asset:
-        needs: pio-build
-        runs-on: ubuntu-latest
+          # 3. The Build Loop
+          for ENV in $ENV_LIST; do
+            echo "---- Building environment: $ENV ----"
+            pio run -e "$ENV"
+
+            # 4. Rename and Move Artifacts
+            # We look for firmware, partitions, and bootloader
+            for FILE in firmware.bin partitions.bin bootloader.bin; do
+              SRC=".pio/build/$ENV/$FILE"
+              DEST="release_assets/${ENV}_${FILE}"
+              
+              if [ -f "$SRC" ]; then
+                cp "$SRC" "$DEST"
+                echo "SUCCESS: Processed $DEST"
+              else
+                echo "INFO: $SRC not found for this env, skipping."
+              fi
+            done
+          done
+
+      - name: List Artifacts
+        run: ls -l release_assets/
+
+      - name: Upload Assets to Release
         env:
-            GH_TOKEN: ${{ github.token }}
-
-        steps:
-            - name: Download Firmware
-              uses: actions/download-artifact@v4
-              with:
-                  name: firmware
-                  path: firmware
-
-            - name: Show Contents of Firmware Directory
-              run: ls ./firmware/
-
-            - name: Upload Firmware to Release Assets
-              run: |
-                  gh release list --repo ${{ github.repository }}
-                  echo "Tag name = ${{ github.event.release.tag_name }}"
-                  gh release upload "${{ github.event.release.tag_name }}" ./firmware/firmware.bin --clobber --repo ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Upload everything in the release_assets folder to the release that triggered this workflow
+          gh release upload ${{ github.event.release.tag_name }} release_assets/* --clobber
