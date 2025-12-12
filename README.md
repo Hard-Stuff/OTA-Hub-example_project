@@ -8,14 +8,14 @@ You can follow along 95% of it for GitLab, just look for the `GitLab` if you wan
 
     Deliver Over-the-Air updates onto your ESP32/embedded devices directly from your code releases in an obvious, clean, light-weight way.
 
-**OTA Hub** is a solution to enable building and hosting your firmware updates on Git (Hub or Lab) and accessing them simply on your ESP devices. That's this repo, and it's entirely open source.
-
-**OTA Hub Cloud** _(coming soon)_ is a cloud software that builds on that by enabling per-device provisioning, and data endpoints to plug into your stack. Think AWS IoT Core but massively simplified - great for hobbyists, prototyping, and startups. OTA Hub Cloud comes in both free and paid tiers.
+**Names**
+- **OTA Hub** is a solution to enable building and hosting your firmware updates on Git (Hub or Lab) and accessing them simply on your ESP devices. That's this repo, and it's entirely open source.
+- **OTA Hub Cloud** _(coming soon)_ is a cloud software that builds on that by enabling per-device provisioning, and data endpoints to plug into your stack. Think AWS IoT Core but massively simplified - great for hobbyists, prototyping, and startups. OTA Hub Cloud comes in both free and paid tiers.
 
 **What sucks about current systems**
 
-- OTA has long been a sore point in hobbyist and early-stage prototyping (e.g. startups), because while AWS and Blynk etc. offer OTA solutions, they all require so much set up, and crucially so much commitment that it hardle seems worth it.
-- Combine that with the weird insistence on drag and dropping `.bin` files into file upload ports, or constantly replacing the file in a dedicated S3 bucket - it becomes a mess bound to go wrong (and impossible to actually trace).
+- OTA has long been a sore point in hobbyist and early-stage prototyping (e.g. startups), because while AWS and Blynk etc. offer OTA solutions, they all require so much set up, and crucially so much commitment that it hardly seems worth it for early builds.
+- Combine that with the weird insistence on drag and dropping `.bin` files into file upload portals, or constantly replacing the file in a dedicated S3 bucket - it becomes a mess bound to go wrong (and impossible to actually trace).
 
 ### Benefits over alternatives
 
@@ -23,7 +23,7 @@ You can follow along 95% of it for GitLab, just look for the `GitLab` if you wan
 2. Easily trace your code to your releases to your deployed firmware.
 3. Not locked into any eco-systems you probably aren't using already (you're probably already using GitHub).
 4. Client-agnostic! Implement OTA Hub on-top of secure or insecure\* connections, on 4G, NB-IoT, or WiFi modules.
-5. The DIY version is open-source, **completely free**, and GitHub hosting is also (currently) completely free!
+5. The OTA Hub Device Client pio package is open-source, so OTA is **completely free**, and GitHub/GitLab firmware building and hosting is also completely free!
 
 _\* Note that our default examples are for SSL-enabled connections, as GitHub requires a secure connection. As this is open-source, you can of course use your own storage buckets APIs for insecure connections etc._
 
@@ -41,13 +41,13 @@ That's it!
 
 ### Dependencies
 
--   hard-stuff/OTA-Hub-diy-device_client
+-   [hard-stuff/OTA-Hub-device_client](https://registry.platformio.org/libraries/hard-stuff/OTA-Hub-device_client)
 
 ## Private repositories (you will need to make a Personal Access Token or Fine Grain Access Token)
 
-OTA Hub DIY works with both your public and private repositories, pulling release files (that are automatically compiled) directly from GitHub. If using a private repository, we need a Personal (or Fine Grain) Access Token (PAT) to represent you so devices can access your secure accoutn. [You can generate your PATs here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+OTA Hub DIY works with both your public and private repositories, pulling release files (that are automatically compiled) directly from GitHub. If using a private repository, we need a Personal (or Fine Grain) Access Token (PAT) to represent you so devices can access your secure account. [You can generate your GitHub PATs here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens), or [for GitLab](https://docs.gitlab.com/user/profile/personal_access_tokens/).
 
-- Then, once created, you can dump the token in a `.token` file and run _(example for **Windows**)_: 
+- Then, once created, you can dump the token in a `.token` file and run: 
   ```powershell
   # windows
   $env:PLATFORMIO_BUILD_FLAGS = "-DOTAHUB_BEARER_TOKEN=\`"$((Get-Content .token -Raw).Trim())\`""
@@ -66,7 +66,7 @@ OTA Hub DIY works with both your public and private repositories, pulling releas
   # linux
   export PLATFORMIO_BUILD_FLAGS='-DOTAHUB_BEARER_TOKEN=\"PUTYOURTOKENHERE\"'
   ```
-  Then run `pio run -t upload` once **in that same terminal** to write the token into the firmware, whereby on boot this token is stored to NVS. All future builds should not need the token as we then retrieve it from NVS.
+  Then run `pio run -t upload` once **in that same terminal** to write the token into the firmware, whereby on boot this token is stored to NVS. You only need to write this once - all future builds should not need the token as we then retrieve it from NVS.
 
 ## Further reading
 
@@ -76,13 +76,13 @@ OTA Hub DIY works with both your public and private repositories, pulling releas
 
 This library has been tested on the ESP32S3 with both the internal WiFi functionality and a [SIMCOM SIM7600G](https://github.com/Hard-Stuff/TinyGSM), both with HTTP and HTTPS connections, both with GitHub and GitLab, and both on public and private repositories.
 
-We are looking for people to support us in testing more boards, other connectivity functionalities, and making **OTA Hub Pro** even more useful.
+We are looking for people to support us in testing more boards, other connectivity functionalities, and making **OTA Hub Pro** even more useful - please make [issues](https://github.com/Hard-Stuff/OTA-Hub-examples/issues) should you come across any!
 
 ### Flashing without VSCode
 
 _Mentioning here only because it might be useful_
 
-The releases created by our CI CD here also work very nicely with Hard Stuff's flashing tool [flash.hard-stuff.com](https://flash.hard-stuff.com), which enables you to flash new firmware based on GitHub/GitLab releases over USB Serial in the browser, without needing to download VSCode etc. Very useful for quick flashes or getting clients/teammates (who are not firmware engineers) new versions. 
+The releases created by our CI CD here also work very nicely with Hard Stuff's flashing tool [flash.hard-stuff.com](https://flash.hard-stuff.com), which enables you to flash new firmware based on GitHub/GitLab releases over USB Serial in the browser, without needing to download VSCode etc. Very useful for quick flashes or getting clients/teammates (who are not firmware engineers) new versions.
 
 ## Contribution
 We're looking for people to work with us further on this - you can get started with issue reports or merge rquests, or you can contact us at [ota-hub@hard-stuff.com](mailto:ota-hub@hard-stuff.com).
