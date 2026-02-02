@@ -7,8 +7,8 @@ An example on getting firmware updates to your ESP32 projects directly from GitH
 [![GitHub stars](https://img.shields.io/github/stars/Hard-Stuff/OTA-Hub-examples-github_project.svg)](https://github.com/Hard-Stuff/OTA-Hub-examples-github_project/stargazers)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-**<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-gitlab.svg" width="24"/> This repo serves as an example for GitHub**
-**<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-github.svg" width="24"/> and for GitLab!**
+**<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-github.svg" height="16"/> This repo serves as an example for GitHub**
+**<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-gitlab.svg" height="16"/> and for GitLab!**
 
 **OTA-Hub** is designed to do one thing, and one thing only:
 
