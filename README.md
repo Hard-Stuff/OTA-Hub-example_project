@@ -21,7 +21,9 @@ An example on getting firmware updates to your ESP32 projects directly from GitH
 
 Find out more about this and our other open source projects and products at [ota-hub.com](ota-hub.com).
 
-**What sucks about current systems**
+## Why?
+
+### What sucks about current ESP32 OTA Solutions
 
 - OTA has long been a sore point in hobbyist and early-stage prototyping because while AWS and Blynk etc. offer OTA solutions they all require so much set up, and crucially so much commitment that it hardly seems worth it.
 - Combine that with the weird insistence on drag and dropping `.bin` files into file upload ports, or constantly replacing the file in a dedicated S3 bucket - it becomes a mess bound to go wrong (and impossible to actually trace to your code!).
