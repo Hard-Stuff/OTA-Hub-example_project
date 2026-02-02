@@ -10,14 +10,14 @@ An example on getting firmware updates to your ESP32 projects directly from GitH
 **<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-gitlab.svg" width="24"/> This repo serves as an example for GitHub**
 **<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-github.svg" width="24"/> and for GitLab!**
 
-**OTA Hub** is designed to do one thing, and one thing only:
+**OTA-Hub** is designed to do one thing, and one thing only:
 
     Deliver Over-the-Air updates onto your ESP32/embedded devices directly from your code releases in an obvious, clean, light-weight way.
 
-**OTA Hub** is the open-source solution to enable building and hosting your firmware updates on Git (Hub or Lab) and accessing them simply on your ESP devices. This repo is the setup guide, and [the device client is available on the PlatformIO Registry](https://registry.platformio.org/libraries/hard-stuff/OTA-Hub-device_client) - there is also a more involved project example showing off even cooler features here.
+**OTA-Hub** is the open-source solution to enable building and hosting your firmware updates on Git (Hub or Lab) and accessing them simply on your ESP devices. This repo is the setup guide, and [the device client is available on the PlatformIO Registry](https://registry.platformio.org/libraries/hard-stuff/OTA-Hub-device_client) - there is also a more involved project example showing off even cooler features here.
 <!-- TODO Matt, show off the project example! -->
 
-**OTA Hub Cloud** _(coming soon)_ is a cloud software that builds on that by enabling per-device provisioning, and data endpoints to plug into your stack. Think AWS IoT Core but massively simplified - great for hobbyists, prototyping, and startups. OTA Hub Cloud comes in both free and paid tiers.
+**OTA-Hub Cloud** _(coming soon)_ is a cloud software that builds on that by enabling per-device provisioning, and data endpoints to plug into your stack. Think AWS IoT Core but massively simplified - great for hobbyists, prototyping, and startups. OTA-Hub Cloud comes in both free and paid tiers.
 
 Find out more about this and our other open source projects and products at [ota-hub.com](ota-hub.com).
 
@@ -34,7 +34,7 @@ Find out more about this and our other open source projects and products at [ota
 1. No-longer worry about drag-and-dropping `.bin` files into some fiddly UI.
 2. Easily trace your code to your releases to your deployed firmware.
 3. Not locked into any eco-systems you probably aren't using already (you're probably already using GitHub / GitLab).
-4. Client-agnostic! Implement OTA Hub on-top of secure or insecure\* connections, on 4G, NB-IoT, or WiFi modules.
+4. Client-agnostic! Implement OTA H-b on-top of secure or insecure\* connections, on 4G, NB-IoT, or WiFi modules.
 5. The DIY version is open-source, **completely free**, and GitHub/Lab hosting is also completely free!
 6. i.e. free, clear, no-fuss, simple OTA - perfect for "just getting started".
 
