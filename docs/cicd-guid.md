@@ -1,16 +1,17 @@
-# Guide to CI CD
+# Setting up your CI CD
 
-- Standard OTA practice relies on 3 things working:
-  1. A place to check if new firmware exists, in professional environments that is your Fleet Manager (e.g. AWS IoT Core), here it is our Git repo.
-  2. A way to build firmware into `firmware.bin` files, in professional environments this is your pipelines (e.g. AWS EC2), here it is our Git repo.
-  3. A place to store built `firmware` files cleanly, in professional environments this is your cloud bucket (e.g. AWS S3), here it is our Git repo.
+- OTA relies on 3 things working:
+  1. **Source code** - A place to store and develop your applications e.g. GitHub or GitLab, here it is our Git repo.
+  2. **Build engine** - A way to build firmware into `firmware.bin` files. In at-scale environments this is your pipelines (e.g. AWS EC2), here it is our Git repo.
+  3. **Version checker** - A place to check if new firmware exists. In at-scale environments that is your Fleet Manager (e.g. AWS IoT Core), here it is our Git repo.
+  4. **Build store** - A place to store built `firmware` files cleanly. In at-scale environments this is your cloud bucket (e.g. AWS S3), here it is our Git repo.
 
-- The keen-eyed among you will notice already what's super cool about OTA Hub on GitHub/GitLab:
-  - One place for your code, for your checking endpoints, for your firmware building, and for your firmware hosting.
-  - This is obviously less flexible and scalable than professional custom environments, like AWS.
-  - But boy, is it easier to get started and far more suitable for hobbyists and prototypes.
+- You may notice already what's super cool about OTA Hub on GitHub/GitLab:
+  - One place for your code, for your firmware building, for your checking endpoints, and for your firmware release hosting.
+- This is obviously less flexible and scalable than professional at-scale custom environments, like AWS.
+- But it is far, far easier to get started and far more suitable for hobbyists and prototypes. (and again, it's free!)
 
-## CI CD here solves "thing 2" above, using GitHub/GitLab as our Build Engine
+## CICD solves "thing 2" above, using GitHub/GitLab as our Build Engine
 
 ### General operation
 
