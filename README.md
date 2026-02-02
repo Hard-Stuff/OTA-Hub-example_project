@@ -43,7 +43,8 @@ _\* Note that our default examples are for SSL-enabled connections, as GitHub re
 There are only two steps you need to consider for OTA updates from GitHub:
 
 1. Set up the CI/CD (see [the CI CD guide](./docs/cicd-guide.md)) on your GitHub/Gitlab repo to automatically build the firmware on new releases.
-    **<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-gitlab.svg" width="24"/> For GitHub**<br/>
+    
+    **<img src="https://raw.githubusercontent.com/tabler/tabler-icons/fe8d99667fd830142804cb166e1dbb8e97db5e83/icons/outline/brand-gitlab.svg" width="24"/>For GitHub**<br/>
     This is as easy as copying the [.github/workflows/](.github/workflows/) folder into your PlatformIO base directory (like in this example), or even just fork this repo! Then, build new releases as normal. <br /> 
     <img src="./docs/media/GitHub_releases.png" width="400px"/>
    
