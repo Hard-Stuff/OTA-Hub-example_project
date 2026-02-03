@@ -8,7 +8,7 @@
 WiFiClientSecure wifi_client;
 OTAHub::FOTA::GithubProvider provider(
     "Hard-Stuff",
-    "OTA-Hub-examples");
+    "OTA-Hub-example_project"); // that's this project
 
 void setup()
 {
